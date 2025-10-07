@@ -1,0 +1,47 @@
+users_emergencies:
+{
+    "emergency": {
+        "description": "Accidente automovilistico",
+        "severity": "CRITICAL",
+        "createdBy": {
+            "id": 1,
+            "name": "Martin",
+            "lastname": "Romero",
+            "email": "martinsantiago.se@gmail.com",
+            "phone": "+56964041720",
+            "role": {
+                "id": 1,
+                "name": "ROLE_ADMIN"
+            },
+            "createAt": "2025-10-06T16:28:04.817077",
+            "active": true
+        }
+    },
+    "createdBy": {
+        "id": 1,
+        "name": "Martin",
+        "lastname": "Romero",
+        "email": "martinsantiago.se@gmail.com",
+        "phone": "+56964041720",
+        "role": {
+            "id": 1,
+            "name": "ROLE_ADMIN"
+        },
+        "createAt": "2025-10-06T16:28:04.817077",
+        "active": true
+    },
+    "emergencyRole": "PRIMARY",
+    "userAssigned": {
+        "id": 4,
+        "name": "John",
+        "lastname": "Doe",
+        "email": "john@gmail.com",
+        "phone": "+56945679978",
+        "role": {
+            "id": 2,
+            "name": "ROLE_MEDIC"
+        },
+        "createAt": "2025-10-06T15:59:59.152444",
+        "active": true
+    }
+}
