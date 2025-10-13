@@ -43,6 +43,12 @@ public class User {
     @JoinColumn(name = "id_role")
     private Role role;
 
+    @NotBlank
+    @Size(min = 8,max = 12)
+    private String password;
+    
+    private String username;
+
     @Column(name = "is_active")
     private boolean isActive;
 
@@ -54,12 +60,13 @@ public class User {
         this.createAt = LocalDateTime.now();
     }
 
-    public User(String name, String lastname, String email, String phone, Role role) {
+    public User(String name, String lastname, String email, String phone, Role role, String password) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.phone = phone;
         this.role = role;
+        this.password = password;
     }
 
     public Long getId() {
@@ -125,6 +132,24 @@ public class User {
     public void setCreateAt(LocalDateTime createAt) {
         this.createAt = createAt;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    
 
     
 
