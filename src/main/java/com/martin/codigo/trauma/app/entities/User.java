@@ -44,7 +44,7 @@ public class User {
     private Role role;
 
     @NotBlank
-    @Size(min = 8,max = 12)
+    //@Size(min = 8,max = 12)
     private String password;
     
     private String username;
