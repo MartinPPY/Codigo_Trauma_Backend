@@ -20,17 +20,14 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.martin.codigo.trauma.app.security.filter.JwtAuthenticationFilter;
+import com.martin.codigo.trauma.app.security.filter.JwtValidationFilter;
+
 @Configuration
 public class AppConfig {
 
-    private final CorsConfigurationSource configurationSource;
-
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
-
-    AppConfig(CorsConfigurationSource configurationSource) {
-        this.configurationSource = configurationSource;
-    }
 
     @Bean
     AuthenticationManager authenticationManager() throws Exception {
@@ -49,11 +46,13 @@ public class AppConfig {
                 .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
                 .anyRequest()
-                .authenticated()
+                .authenticated())
 
-        )
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtValidationFilter(authenticationManager()))
+
                 .csrf((config) -> config.disable())
-                .cors((cors) -> cors.configurationSource(configurationSource))
+                .cors((cors) -> cors.configurationSource(configurationSource()))
                 .sessionManagement((managment) -> managment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
@@ -62,7 +61,7 @@ public class AppConfig {
     @Bean
     CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(java.util.Arrays.asList("*"));
+        configuration.setAllowedOriginPatterns(java.util.Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
