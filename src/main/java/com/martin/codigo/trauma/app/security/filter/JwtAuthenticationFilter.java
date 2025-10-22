@@ -86,6 +86,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         json.put("token", jwt);
         json.put("username", username);
         json.put("message", String.format("Inicio de sesion exitoso %s", username));
+        json.put("role",roles.toString());
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(json));
         response.setContentType(CONTENT_TYPE);

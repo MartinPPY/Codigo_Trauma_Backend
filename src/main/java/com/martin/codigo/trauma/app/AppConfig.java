@@ -43,8 +43,10 @@ public class AppConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests((authz) -> authz
-                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+                /* SI VIENE ROLE_ADMIN POR EJEMPLO SPRING DEBERIA QUITAR EL PREFIJO */
+                .requestMatchers(HttpMethod.GET, "/api/emergencies/**").hasAnyRole("ADMIN", "RECEPTIONIST", "MEDIC")
+                .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated())
 
