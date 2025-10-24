@@ -44,9 +44,9 @@ public class User {
     private Role role;
 
     @NotBlank
-    //@Size(min = 8,max = 12)
+    // @Size(min = 8,max = 12)
     private String password;
-    
+
     private String username;
 
     @Column(name = "is_active")
@@ -55,9 +55,12 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createAt;
 
+    private Boolean available;
+
     public User() {
         this.isActive = true;
         this.createAt = LocalDateTime.now();
+        this.available = true;
     }
 
     public User(String name, String lastname, String email, String phone, Role role, String password) {
@@ -67,6 +70,10 @@ public class User {
         this.phone = phone;
         this.role = role;
         this.password = password;
+    }
+
+    public User(String username) {
+        this.username = username;
     }
 
     public Long getId() {
@@ -149,8 +156,12 @@ public class User {
         this.username = username;
     }
 
-    
+    public Boolean getAvaliable() {
+        return available;
+    }
 
-    
+    public void setAvaliable(Boolean available) {
+        this.available = available;
+    }
 
 }
