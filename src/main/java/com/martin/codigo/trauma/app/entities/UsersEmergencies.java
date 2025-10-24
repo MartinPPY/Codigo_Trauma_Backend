@@ -2,12 +2,12 @@ package com.martin.codigo.trauma.app.entities;
 
 import java.time.LocalDateTime;
 
-
 import com.martin.codigo.trauma.app.models.EmergencyRole;
 import com.martin.codigo.trauma.app.models.EmergencyStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -17,8 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-
 @Entity
+@EntityListeners(UsersEmergenicesListener.class)
 @Table(name = "users_emergencies")
 public class UsersEmergencies {
 
@@ -27,7 +27,7 @@ public class UsersEmergencies {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")    
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
@@ -44,7 +44,7 @@ public class UsersEmergencies {
     @Enumerated(EnumType.STRING)
     @Column(name = "role_in_emergency")
     private EmergencyRole emergencyRole;
-    
+
     @Enumerated(EnumType.STRING)
     private EmergencyStatus status;
 
@@ -57,7 +57,7 @@ public class UsersEmergencies {
     @Column(columnDefinition = "TEXT")
     private String notes;
 
-    public UsersEmergencies(){
+    public UsersEmergencies() {
         this.assignedAt = LocalDateTime.now();
         this.status = EmergencyStatus.PENDING;
         this.startedAt = LocalDateTime.now();
@@ -150,12 +150,5 @@ public class UsersEmergencies {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-
-    
-
-    
-
-
-
 
 }

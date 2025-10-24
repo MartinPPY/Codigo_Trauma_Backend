@@ -2,30 +2,38 @@ package com.martin.codigo.trauma.app.models;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 public class UsersEmergenciesDto {
 
+    private Long id;
     private LocalDateTime assignedAt;
     private String assignedBy;
     private LocalDateTime completedAt;
     private String emergencyName;
-    private LocalDateTime startedAt;
     private String userAssigned;
     private String notes;
-    private String emergencyRole;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private EmergencyRole emergencyRole;
+
+    @Enumerated(EnumType.STRING)
+    private EmergencyStatus status;
 
     public UsersEmergenciesDto() {
     }
 
-    public UsersEmergenciesDto(LocalDateTime assignedAt, String assignedBy, LocalDateTime completedAt,
-            String emergencyName, LocalDateTime startedAt, String userAssigned, String notes, String emergencyRole,
-            String status) {
+    public UsersEmergenciesDto(Long id,LocalDateTime assignedAt, String assignedBy, LocalDateTime completedAt,
+            String emergencyName, String userAssigned, String notes,
+            EmergencyRole emergencyRole,
+            EmergencyStatus status) {
+        this.id = id;
         this.assignedAt = assignedAt;
-        this.assignedBy = assignedBy;
+        this.assignedBy = assignedBy; // Nombre de la persona que lo asigno
         this.completedAt = completedAt;
-        this.emergencyName = emergencyName;
-        this.startedAt = startedAt;
-        this.userAssigned = userAssigned;
+        this.emergencyName = emergencyName; // nombre de la emergencia (de la tabla emergencias)
+        this.userAssigned = userAssigned; // usuario asignado
         this.notes = notes;
         this.emergencyRole = emergencyRole;
         this.status = status;
@@ -63,14 +71,6 @@ public class UsersEmergenciesDto {
         this.emergencyName = emergencyName;
     }
 
-    public LocalDateTime getStartedAt() {
-        return startedAt;
-    }
-
-    public void setStartedAt(LocalDateTime startedAt) {
-        this.startedAt = startedAt;
-    }
-
     public String getUserAssigned() {
         return userAssigned;
     }
@@ -88,19 +88,29 @@ public class UsersEmergenciesDto {
     }
 
     public String getEmergencyRole() {
-        return emergencyRole;
+        return emergencyRole.toString();
     }
 
-    public void setEmergencyRole(String emergencyRole) {
+    public void setEmergencyRole(EmergencyRole emergencyRole) {
         this.emergencyRole = emergencyRole;
     }
 
     public String getStatus() {
-        return status;
+        return status.toString();
     }
 
-    public void setStatus(String status) {
+    public void setStatus(EmergencyStatus status) {
         this.status = status;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
 
 }

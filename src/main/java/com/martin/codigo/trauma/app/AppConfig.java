@@ -47,7 +47,7 @@ public class AppConfig {
                 .requestMatchers(HttpMethod.GET, "/api/emergencies/**").hasAnyRole("ADMIN", "RECEPTIONIST", "MEDIC")
                 .requestMatchers(HttpMethod.POST,"/api/emergencies/**").hasAnyRole("ADMIN","RECEPTIONIST")
                 .requestMatchers(HttpMethod.GET,"/api/users-emergencies").hasAnyRole("ADMIN","RECEPTIONIST","MEDIC")
-                .requestMatchers(HttpMethod.PUT,"/api/users-emergencies").hasAnyRole("ADMIN","RECEPTIONIST")
+                .requestMatchers(HttpMethod.PUT,"/api/users-emergencies/**").hasAnyRole("ADMIN","MEDIC")
                 .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                 .anyRequest()
