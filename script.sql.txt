@@ -1,0 +1,37 @@
+-- ROLES DE PRUEBA
+INSERT INTO "roles" (name) VALUES ('ROLE_ADMIN');
+INSERT INTO "roles" (name) VALUES ('ROLE_MEDIC');
+INSERT INTO "roles" (name) VALUES ('ROLE_RECEPTIONIST');
+
+
+
+
+--TRIGGER QUE GENERA EL NOMBRE DE USUARIO
+
+-- Primero creamos la función del trigger
+CREATE OR REPLACE FUNCTION generate_username()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Si el username vino vacío o nulo, lo generamos
+    IF NEW.username IS NULL OR NEW.username = '' THEN
+        LOOP
+            NEW.username := NEW.name || ' ' || NEW.lastname || '_' || substring(md5(random()::text) FROM 1 FOR 6);
+            -- Salimos del loop cuando el username generado no existe en la tabla
+            EXIT WHEN NOT EXISTS (SELECT 1 FROM users WHERE username = NEW.username);
+        END LOOP;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Ahora creamos el trigger que usa la función anterior
+CREATE TRIGGER trg_generate_username
+BEFORE INSERT ON users
+FOR EACH ROW
+EXECUTE FUNCTION generate_username();
+
+
+-- AGREGAR CAMBO AVALIABLE
+ALTER TABLE "users" ADD COLUMN "available" BOOLEAN;
+
