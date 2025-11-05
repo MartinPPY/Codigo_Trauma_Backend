@@ -23,11 +23,6 @@ class AppApplicationTests {
 
 	@Test
 	void contextLoads() {
-
-	}
-
-	@Test
-	void controllerLoads() throws Exception {
 		// verifica que el user controller no es nulo
 		assertThat(userController).isNotNull();
 		assertThat(emergencyController).isNotNull();

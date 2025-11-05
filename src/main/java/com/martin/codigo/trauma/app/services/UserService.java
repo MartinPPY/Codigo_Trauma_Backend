@@ -7,8 +7,6 @@ import com.martin.codigo.trauma.app.models.UserDto;
 
 public interface UserService {
 
-    List<UserDto> findAllUsersDto();
-
     User save(User user);
 
     List<UserDto> findAllUserDtoByAvailabilityAndRoleId(Long id, Boolean availability);

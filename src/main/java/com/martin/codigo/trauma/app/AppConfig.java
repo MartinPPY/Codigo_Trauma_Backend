@@ -45,9 +45,10 @@ public class AppConfig {
         return http.authorizeHttpRequests((authz) -> authz
                 /* SI VIENE ROLE_ADMIN POR EJEMPLO SPRING DEBERIA QUITAR EL PREFIJO */
                 .requestMatchers(HttpMethod.GET, "/api/emergencies/**").hasAnyRole("ADMIN", "RECEPTIONIST", "MEDIC")
-                .requestMatchers(HttpMethod.POST,"/api/emergencies/**").hasAnyRole("ADMIN","RECEPTIONIST")
-                .requestMatchers(HttpMethod.GET,"/api/users-emergencies").hasAnyRole("ADMIN","RECEPTIONIST","MEDIC")
-                .requestMatchers(HttpMethod.PUT,"/api/users-emergencies/**").hasAnyRole("ADMIN","MEDIC")
+                .requestMatchers(HttpMethod.POST, "/api/emergencies/**").hasAnyRole("ADMIN", "RECEPTIONIST")
+                .requestMatchers(HttpMethod.DELETE, "/api/emergencies/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/users-emergencies").hasAnyRole("ADMIN", "RECEPTIONIST", "MEDIC")
+                .requestMatchers(HttpMethod.PUT, "/api/users-emergencies/**").hasAnyRole("ADMIN", "MEDIC")
                 .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                 .anyRequest()

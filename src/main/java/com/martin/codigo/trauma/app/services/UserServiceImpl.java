@@ -28,27 +28,6 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public List<UserDto> findAllUsersDto() {
-        return (List<UserDto>) userRepository.findAllUsersDto();
-    }
-
-    @Transactional
-    @Override
-    public User save(User user) {
-
-        Optional<Role> roleDb = roleRepository.findById(user.getRole().getId());
-
-        System.out.println(user.getRole().getId());
-
-        if (!roleDb.isPresent()) {
-            throw new IllegalArgumentException("el role ingresado no existe!");
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-    @Transactional
-    @Override
     public List<UserDto> findAllUserDtoByAvailabilityAndRoleId(Long id, Boolean availability) {
 
         if (id == null && availability == null) {
@@ -75,6 +54,21 @@ public class UserServiceImpl implements UserService {
         System.out.println("id y disponibilidad son nulos");
         return userRepository.findAllUsersDto();
 
+    }
+
+    @Transactional
+    @Override
+    public User save(User user) {
+
+        Optional<Role> roleDb = roleRepository.findById(user.getRole().getId());
+
+        System.out.println(user.getRole().getId());
+
+        if (!roleDb.isPresent()) {
+            throw new IllegalArgumentException("el role ingresado no existe!");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
 }

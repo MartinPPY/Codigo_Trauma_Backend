@@ -20,6 +20,7 @@ public class UsersEmergenicesListener {
     public void onAfterUpdateEmergency(UsersEmergencies ue) {
 
         Emergency emergency = ue.getEmergency();
+        User user = ue.getUser();
 
         if (emergency == null)
             return;
@@ -27,9 +28,11 @@ public class UsersEmergenicesListener {
         emergency.setStatus(ue.getStatus());
 
         /* SI LA EMERGENCIA FUE CANCELADA O RESUELTA SE ACTUALIZARA LA FECHA RESUELTA */
-        if (ue.getStatus() == EmergencyStatus.RESOLVED) {
+        if (ue.getStatus() == EmergencyStatus.RESOLVED || ue.getStatus() == EmergencyStatus.CANCELLED) {
             emergency.setResolvedAt(LocalDateTime.now());
             ue.setCompletedAt(LocalDateTime.now());
+            user.setActive(true);
+
         }
 
         emergency.setUpdateAt(LocalDateTime.now());

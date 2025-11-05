@@ -29,17 +29,11 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<UserDto> findALl() {
-        return (List<UserDto>) userService.findAllUsersDto();
-    }
-
-    @GetMapping("/params")
-    public List<UserDto> findByParameters(@RequestParam(required = false) Long id,
+    public ResponseEntity<List<UserDto>> findALl(@RequestParam(required = false) Long id,
             @RequestParam(required = false) Boolean availability) {
-        
-        System.out.println(id);
-        System.out.println(availability);
-        return userService.findAllUserDtoByAvailabilityAndRoleId(id, availability);
+
+        List<UserDto> users = (List<UserDto>) userService.findAllUserDtoByAvailabilityAndRoleId(id, availability);
+        return ResponseEntity.ok().body(users);
     }
 
     @PostMapping

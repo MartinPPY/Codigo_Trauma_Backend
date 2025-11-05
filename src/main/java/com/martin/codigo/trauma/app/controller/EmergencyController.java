@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,30 +22,34 @@ import com.martin.codigo.trauma.app.services.EmergencyService;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/api/emergencies")
 public class EmergencyController {
-
 
     @Autowired
     private EmergencyService emergencyService;
 
     @GetMapping
-    public List<Emergency> findAll(){
+    public List<Emergency> findAll() {
         return emergencyService.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody EmergencyDto emergencyDto, BindingResult result){
+    public ResponseEntity<?> create(@Valid @RequestBody EmergencyDto emergencyDto, BindingResult result) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return validation(result);
         }
 
         Emergency emergencyCreated = emergencyService.save(emergencyDto);
 
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(emergencyCreated);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+
+        return ResponseEntity.ok().body(null);
     }
 
     private ResponseEntity<?> validation(BindingResult result) {
@@ -56,7 +62,5 @@ public class EmergencyController {
 
         return ResponseEntity.badRequest().body(errosMap);
     }
-
-
 
 }
